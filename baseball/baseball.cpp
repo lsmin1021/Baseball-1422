@@ -12,11 +12,29 @@ public:
 
 	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
-		if(guessNumber == question) return { true,3,0 };
-		if (guessNumber == "129") return { false,2,0 };
-		if (guessNumber == "132") return { false,1,2 };
-		return { false,0,0 };
+		
+		return checkAnswer(guessNumber);
 	}
+	bool isCorrectAnswer(const std::string& guessNumber) {
+		return guessNumber == question;
+	}
+
+	GuessResult checkAnswer(const std::string& guessNumber) {
+		int strikes = 0;
+		int balls = 0;
+		if (isCorrectAnswer(guessNumber)) return { true,3,0 };
+		for (char ch : guessNumber) {
+			for (char answer : question) {
+				if (ch == answer) {
+					if (guessNumber.find(ch) == question.find(answer)) strikes++;
+					else balls++;
+					break;
+				}
+			}
+		}
+		return { false,strikes,balls };
+	}
+
 	void assertIllegalArgument(const std::string& guessNumber)
 	{
 		if (guessNumber.length() != 3) {
