@@ -2,15 +2,27 @@
 #include "gmock/gmock.h"
 using namespace std;
 
-TEST(BaseballGame, TryGameTest) {
-	EXPECT_EQ(1, 1);
-}
-
-TEST(BaseballGame, ThorwExceptionWhenInputLengthIsUnmached) {
+class BaseballFixture : public testing::Test {
+public:
 	Baseball game;
-	EXPECT_THROW(game.guess(string("12")), length_error);
+	void assertIllegalArugment(string guessNumber) {
+		try {
+			game.guess(guessNumber);
+			FAIL();
+		}
+		catch (exception e) {
+			// PASS
+		}
+	}
+};
+
+TEST_F(BaseballFixture, ThorwExceptionWhenInputLengthIsUnmached) {
+	assertIllegalArugment("12");
 }
 
+TEST_F(BaseballFixture,ThorwExceptionWhenInvalidChar) {
+	assertIllegalArugment("12s");
+}
 
 int main() {
 	::testing::InitGoogleMock();
