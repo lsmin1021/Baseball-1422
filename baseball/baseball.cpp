@@ -24,12 +24,9 @@ public:
 		int strikes = 0;
 		int balls = 0;
 		for (char guessNum : guessNumber) {
-			for (char answerNum : answer) {
-				if (guessNum == answerNum) {
-					if (guessNumber.find(guessNum) == answer.find(answerNum)) strikes++;
-					else balls++;
-					break;
-				}
+			if(answer.find(guessNum) != string::npos){
+				if (guessNumber.find(guessNum) == answer.find(guessNum)) strikes++;
+				else balls++;
 			}
 		}
 		return { false,strikes,balls };
