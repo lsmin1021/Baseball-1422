@@ -8,7 +8,7 @@ struct GuessResult {
 
 class Baseball {
 public:
-	explicit Baseball(const string& question) : question(question) {}
+	explicit Baseball(const string& answer) : answer(answer) {}
 
 	GuessResult guess(const string& guessNumber) {
 		assertIllegalArgument(guessNumber);
@@ -16,17 +16,17 @@ public:
 		return checkAnswer(guessNumber);
 	}
 	bool isCorrectAnswer(const std::string& guessNumber) {
-		return guessNumber == question;
+		return guessNumber == answer;
 	}
 
 	GuessResult checkAnswer(const std::string& guessNumber) {
+		if (isCorrectAnswer(guessNumber)) return { true,3,0 };
 		int strikes = 0;
 		int balls = 0;
-		if (isCorrectAnswer(guessNumber)) return { true,3,0 };
-		for (char ch : guessNumber) {
-			for (char answer : question) {
-				if (ch == answer) {
-					if (guessNumber.find(ch) == question.find(answer)) strikes++;
+		for (char guessNum : guessNumber) {
+			for (char answerNum : answer) {
+				if (guessNum == answerNum) {
+					if (guessNumber.find(guessNum) == answer.find(answerNum)) strikes++;
 					else balls++;
 					break;
 				}
@@ -40,8 +40,8 @@ public:
 		if (guessNumber.length() != 3) {
 			throw length_error("Must be three letters.");
 		}
-		for (char ch : guessNumber) {
-			if (ch >= '0' && ch <= '9') continue;
+		for (char guessNum : guessNumber) {
+			if (guessNum >= '0' && guessNum <= '9') continue;
 			throw invalid_argument("Must be number");
 		}
 		if (isDuplicatedNumber(guessNumber)) {
@@ -55,5 +55,5 @@ public:
 			|| guessNumber[1] == guessNumber[2];
 	}
 private:
-	string question;
+	string answer;
 };
