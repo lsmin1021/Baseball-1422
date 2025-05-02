@@ -19,6 +19,7 @@ public:
 TEST_F(BaseballFixture, ThorwExceptionWhenInvalidCase) {
 	assertIllegalArugment("12");
 	assertIllegalArugment("12s");
+	assertIllegalArugment("121");
 }
 
 
