@@ -16,13 +16,11 @@ public:
 	}
 };
 
-TEST_F(BaseballFixture, ThorwExceptionWhenInputLengthIsUnmached) {
+TEST_F(BaseballFixture, ThorwExceptionWhenInvalidCase) {
 	assertIllegalArugment("12");
-}
-
-TEST_F(BaseballFixture,ThorwExceptionWhenInvalidChar) {
 	assertIllegalArugment("12s");
 }
+
 
 int main() {
 	::testing::InitGoogleMock();
